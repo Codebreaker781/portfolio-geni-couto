@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geni Couto — Solah Mentoria</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== Root & Palette ========== */
+    :root{
+      --bg:#0b0b0b;               /* deep black */
+      --card:#121212;
+      --gold:#d4af37;             /* luxurious gold */
+      --gold-soft:#cfae32;
+      --white:#f6f6f6;
+      --muted:#cfcfcf;
+      --glass: rgba(255,255,255,0.03);
+      --max-width:1100px;
+      --radius:14px;
+      --transition: 350ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,0.02), transparent 6%),
+                  linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.9)),
+                  var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden; /* no horizontal scroll */
+      line-height:1.5;
+      padding-bottom:60px;
+    }
+
+    /* Container */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:34px 20px}
+
+    /* Header */
+    header{
+      position:fixed;left:0;right:0;top:0;
+      backdrop-filter: blur(6px);
+      z-index:1200;
+      transition: transform var(--transition), background 300ms;
+      background: linear-gradient(180deg, rgba(11,11,11,0.65), rgba(11,11,11,0.35));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .header-inner{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:18px 20px}
+    .logo{
+      display:flex;gap:12px;align-items:center;font-weight:600;
+    }
+    .logo-mark{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      display:flex;align-items:center;justify-content:center;color:#111;font-weight:700;font-family:"Playfair Display",serif;
+      box-shadow:0 6px 20px rgba(212,175,55,0.12);
+    }
+    nav{display:flex;gap:20px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:0.95rem;transition: color 200ms}
+    nav a:hover{color:var(--white)}
+    .cta{
+      background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+      color:#080808;padding:10px 14px;border-radius:10px;font-weight:600;text-decoration:none;box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+      transition: transform 220ms;
+    }
+    .cta:hover{transform: translateY(-3px)}
+
+    /* Hide header on scroll */
+    header.hidden{transform: translateY(-120%)}
+
+    /* Hero */
+    .hero{
+      display:grid;grid-template-columns: 1fr 520px;gap:44px;align-items:center;
+      padding:120px 20px 80px;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;padding:36px;border:1px solid rgba(212,175,55,0.08);
+      box-shadow: 0 18px 60px rgba(2,2,2,0.6);
+      transform: translateY(0);
+    }
+    h1.title{
+      font-family:"Playfair Display", serif;
+      font-size:2.3rem;color:var(--gold);letter-spacing:0.5px;margin-bottom:8px;
+    }
+    p.lead{
+      color:var(--muted);font-size:1.05rem;margin-bottom:18px;
+    }
+    .badges{display:flex;gap:10px;margin-bottom:18px}
+    .badge{background:var(--glass);padding:8px 12px;border-radius:999px;font-weight:600;color:var(--white);font-size:0.85rem;border:1px solid rgba(255,255,255,0.03)}
+
+    .hero-ctas{display:flex;gap:12px;align-items:center}
+    .btn-outline{color:var(--gold);border:1px solid rgba(212,175,55,0.14);padding:10px 14px;border-radius:10px;font-weight:600;text-decoration:none}
+    .btn-primary{background:linear-gradient(90deg,var(--gold),var(--gold-soft));padding:10px 14px;border-radius:12px;color:#080808;text-decoration:none;font-weight:700;box-shadow:0 10px 30px rgba(212,175,55,0.12)}
+
+    /* Photo panel */
+    .photo-panel{
+      width:100%;height:100%;min-height:420px;border-radius:16px;overflow:hidden;position:relative;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 24px 80px rgba(2,2,2,0.6);
+    }
+    .photo{
+      position:absolute;inset:0;background-position:center;background-size:cover;transform: scale(1.02);
+      transition: transform 900ms cubic-bezier(.2,.9,.3,1);
+    }
+    .photo-panel:hover .photo{transform: scale(1.06)}
+
+    /* Sections */
+    section{padding:88px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    .section-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .section-head h2{font-family:"Playfair Display",serif;color:var(--gold);font-size:1.6rem}
+    .section-sub{color:var(--muted)}
+
+    /* Mission + Offers */
+    .grid-2{display:grid;grid-template-columns: 1fr 1fr;gap:28px}
+    .mission{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border-radius:14px;padding:22px;border:1px solid rgba(212,175,55,0.06);
+    }
+    .mission h3{font-family:"Playfair Display",serif;color:var(--gold);margin-bottom:8px}
+    .mission p{color:var(--white)}
+
+    .cards{
+      display:grid;grid-template-columns: repeat(2,1fr);gap:18px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border-radius:12px;padding:18px;border:1px solid rgba(212,175,55,0.06);
+      box-shadow:0 8px 30px rgba(2,2,2,0.5);transition: transform 350ms, box-shadow 350ms;
+      display:flex;gap:12px;align-items:flex-start;
+    }
+    .card:hover{transform: translateY(-8px) rotateX(1deg);box-shadow:0 24px 60px rgba(2,2,2,0.6)}
+    .card .icon{
+      width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#081;flex-shrink:0;
+      color:#111;font-weight:700;
+    }
+    .card h4{font-family:"Playfair Display",serif;color:var(--gold);margin-bottom:6px;font-size:1.05rem}
+    .card p{color:var(--muted);font-size:0.95rem}
+
+    /* Transform section - visual */
+    .transform{
+      display:flex;gap:22px;align-items:center;flex-wrap:wrap;
+    }
+    .transform .left{flex:1;min-width:280px}
+    .transform .visual{width:360px;height:240px;border-radius:14px;background:
+      linear-gradient(120deg, rgba(212,175,55,0.06), rgba(212,175,55,0.02));display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(212,175,55,0.06)}
+    .transform .visual svg{width:80%;height:80%}
+
+    /* Diferenciais + Contact */
+    .diffs{display:flex;gap:18px;flex-wrap:wrap}
+    .diff-item{flex:1;min-width:200px;background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .diff-item h5{color:var(--gold);font-family:"Playfair Display",serif;margin-bottom:8px}
+    .diff-item p{color:var(--muted)}
+
+    .contacts{display:flex;gap:12px;align-items:center;margin-top:18px}
+    .contact-pill{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
+    .contact-pill svg{width:18px;height:18px;fill:var(--gold)}
+
+    footer{padding:28px 0;color:var(--muted);text-align:center;margin-top:32px;border-top:1px solid rgba(255,255,255,0.02)}
+    /* Responsive */
+    @media (max-width:1050px){
+      .hero{grid-template-columns: 1fr 380px}
+      .grid-2{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+    }
+    @media (max-width:700px){
+      .hero{grid-template-columns:1fr; padding-top:100px;}
+      .photo-panel{min-height:300px}
+      .logo-mark{width:38px;height:38px}
+      nav{display:none} /* mobile simplified header */
+      .header-inner{justify-content:space-between}
+    }
+
+    /* Animations on scroll (JS adds .inview) */
+    .reveal{opacity:0;transform: translateY(14px);transition:opacity 650ms var(--transition), transform 650ms var(--transition)}
+    .reveal.inview{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="logo" aria-hidden="false">
+        <div class="logo-mark">S</div>
+        <div>
+          <div style="font-family:'Playfair Display', serif; color:var(--gold); font-size:1rem">Solah Mentoria</div>
+          <div style="font-size:0.82rem;color:var(--muted)">Geni Couto</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <a href="#quem-sou">Quem Sou</a>
+        <a href="#historia">Minha História</a>
+        <a href="#missao">Missão</a>
+        <a href="#transformacao">Transformação</a>
+        <a href="#diferenciais">Diferenciais</a>
+      </nav>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <a class="cta" href="#contato">Agende sua mentoria</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="wrap">
+      <!-- HERO / Quem Sou Eu -->
+      <section id="quem-sou" class="hero" aria-labelledby="titulo-quemsou">
+        <div class="hero-card reveal">
+          <h1 id="titulo-quemsou" class="title">Quem sou eu?</h1>
+          <div class="badges">
+            <span class="badge">Mentora Financeira</span>
+            <span class="badge">Fundadora • Solah Mentoria</span>
+          </div>
+          <p class="lead"><strong>Sou Geni Couto</strong>, fundadora do grupo <em>Solah Mentoria</em>, especializada em ajudar pessoas a organizarem suas finanças e treinar profissionais a se tornarem governadores das suas finanças.</p>
+
+          <div style="display:flex;gap:14px;flex-wrap:wrap" class="hero-ctas">
+            <a href="#missao" class="btn-primary">Quero saber mais</a>
+            <a href="#contato" class="btn-outline">Contato</a>
+          </div>
+        </div>
+
+        <!-- Photo on the right: replace URL below with a portrait full-body photo of the mentor -->
+        <div class="photo-panel reveal" aria-hidden="false">
+          <div class="photo" id="hero-photo" style="background-image:url('img/hero_img.jpeg');"></div>
+        </div>
+      </section>
+
+      <!-- Minha História -->
+      <section id="historia" class="reveal">
+        <div class="section-head">
+          <h2>Minha História</h2>
+          <div class="section-sub">Uma trajetória de superação e aprendizado</div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1;min-width:280px">
+            <div style="background:var(--card);padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(0,0,0,0.6)">
+              <p style="color:var(--muted);font-size:1rem">
+                Desde cedo, vi como a falta de educação financeira pode afetar sonhos e famílias. Transformei desafios pessoais em experiência prática, criando métodos simples e humanizados para quem deseja governar o próprio dinheiro.
+              </p>
+              <p style="margin-top:14px;color:var(--white)"><strong>Hoje ajudo pessoas a recuperarem estabilidade financeira, eliminar dívidas e construir um plano rumo à liberdade.</strong></p>
+            </div>
+          </div>
+
+          <div style="width:420px;min-width:260px">
+            <div style="background:linear-gradient(120deg, rgba(212,175,55,0.04), rgba(212,175,55,0.01));padding:18px;border-radius:12px;border:1px solid rgba(212,175,55,0.06)">
+              <!-- Decor graphics -->
+              <svg viewBox="0 0 360 180" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#d4af37" stop-opacity="0.18"/><stop offset="1" stop-color="#d4af37" stop-opacity="0.04"/></linearGradient></defs>
+                <rect x="0" y="0" width="360" height="180" rx="10" fill="url(#g1)"/>
+                <g transform="translate(18,14)" fill="none" stroke="#d4af37" stroke-opacity="0.28" stroke-width="2">
+                  <path d="M0,120 C70,40 140,40 210,120" stroke-linecap="round"/>
+                  <path d="M20,80 C90,10 160,10 230,80" stroke-linecap="round" stroke-opacity="0.18"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Missão + Ofertas -->
+      <section id="missao" class="reveal">
+        <div class="section-head"><h2>Minha Missão</h2><div class="section-sub">Propósito e compromisso</div></div>
+
+        <div class="grid-2">
+          <div class="mission reveal">
+            <h3>Levar clareza e autonomia</h3>
+            <p>Minha missão é transformar vidas através da educação financeira — promover decisões conscientes, empoderar pessoas e formar profissionais capazes de replicar conhecimento com ética e resultados.</p>
+
+            <blockquote style="margin-top:16px;color:var(--muted);border-left:3px solid rgba(212,175,55,0.14);padding-left:12px;font-style:italic">
+              "Ensinar a governar suas finanças é abrir a porta para a liberdade." — Geni Couto
+            </blockquote>
+          </div>
+
+          <div>
+            <h3 style="font-family:'Playfair Display', serif;color:var(--gold);margin-bottom:12px">O Que Eu Ofereço</h3>
+            <div class="cards">
+              <div class="card">
+                <div class="icon">1</div>
+                <div>
+                  <h4>Mentoria Individual</h4>
+                  <p>Atendimento personalizado, diagnóstico financeiro, plano de ação e acompanhamento prático até alcançar metas.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="icon">2</div>
+                <div>
+                  <h4>Treinamentos & Palestras</h4>
+                  <p>Sessões corporativas e presenciais com metodologias aplicáveis para equipes e público geral.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="icon">3</div>
+                <div>
+                  <h4>Workshops</h4>
+                  <p>Workshops intensivos com exercícios práticos sobre orçamento, dívidas e investimentos básicos.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="icon">4</div>
+                <div>
+                  <h4>Formação de Mentores</h4>
+                  <p>Programa para formar novos mentores com conteúdo técnico e didático para replicação.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- A Transformação -->
+      <section id="transformacao" class="reveal">
+        <div class="section-head"><h2>A Transformação</h2><div class="section-sub">Do ponto A ao B — resultados reais</div></div>
+
+        <div class="transform">
+          <div class="left">
+            <p style="color:var(--muted)">Com ferramentas práticas e acompanhamento humano, muitos clientes recuperaram sua estabilidade financeira, conquistaram reservas, e passaram a investir com segurança. Meu método foca em ganhar controle, eliminar vulnerabilidades e construir caminhos realistas para objetivos financeiros.</p>
+
+            <ul style="margin-top:12px;color:var(--white);list-style:none;padding-left:0">
+              <li style="margin:8px 0">✔ Diagnóstico realista e sem julgamentos</li>
+              <li style="margin:8px 0">✔ Plano financeiro passo-a-passo</li>
+              <li style="margin:8px 0">✔ Acompanhamento com metas e prazos</li>
+            </ul>
+          </div>
+
+          <div class="visual" aria-hidden="true">
+            <!-- Decorative 'before/after' visual -->
+            <svg viewBox="0 0 300 180" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="lg2" x1="0" x2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.06"/>
+                  <stop offset="1" stop-color="#d4af37" stop-opacity="0.12"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="300" height="180" rx="12" fill="url(#lg2)"/>
+              <g transform="translate(18,18)" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round">
+                <path d="M0,120 L40,80 L80,100 L120,50 L160,60 L200,20" stroke-opacity="0.9"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diferenciais + Contato -->
+      <section id="diferenciais" class="reveal">
+        <div class="section-head"><h2>Diferenciais</h2><div class="section-sub">Por que escolher a Solah Mentoria</div></div>
+
+        <div class="diffs">
+          <div class="diff-item">
+            <h5>Abordagem Humanizada</h5>
+            <p>Trabalhamos com empatia, metas reais e planos que cabem na vida do cliente.</p>
+          </div>
+          <div class="diff-item">
+            <h5>Experiência Comprovada</h5>
+            <p>Resultados práticos com clientes que conquistaram estabilidade e reservas.</p>
+          </div>
+          <div class="diff-item">
+            <h5>Material Prático</h5>
+            <p>Planilhas, roteiros e checklists para execução imediata.</p>
+          </div>
+          <div class="diff-item">
+            <h5>Formação de Profissionais</h5>
+            <p>Capacitação para quem deseja ensinar e replicar metodologias.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--gold)">Vamos conversar?</h3>
+          <p style="color:var(--muted)">Se eu consegui sair de uma dívida de R$ 1,5 milhão e transformar fracasso em sucesso, você também pode. Eu vou te mostrar o caminho.</p>
+
+          <div class="contacts" id="contato" style="margin-top:12px">
+            <!-- WhatsApp (replace phone number in href) -->
+            <a class="contact-pill" href="https://wa.me/55%2011%2098747-5152?text=Oi!%20%F0%9F%91%8B%0AEstou%20buscando%20orienta%C3%A7%C3%A3o%20para%20organizar%20melhor%20minhas%20finan%C3%A7as%20e%20percebi%20que%20voc%C3%AAs%20t%C3%AAm%20diferentes%20servi%C3%A7os.%20Gostaria%20de%20saber%20mais%20detalhes%20sobre%20como%20funcionam%20e%20qual%20seria%20o%20mais%20indicado%20para%20mim." target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.52 3.48A11.86 11.86 0 0012 0C5.37 0 .01 4.86.01 11.09a11.64 11.64 0 001.64 5.57L0 24l7.64-2.03A11.86 11.86 0 0012 22.18c6.63 0 12-4.86 12-11.09 0-2.98-1.22-5.77-3.48-7.61zM12 20.1c-1.62 0-3.2-.44-4.58-1.26l-.33-.2-4.54 1.2 1.2-4.4-.24-.36A8.14 8.14 0 013.92 11.1c0-4.49 3.6-8.14 8.08-8.14 4.48 0 8.09 3.65 8.09 8.14 0 4.49-3.61 8.14-8.09 8.14z" fill="currentColor"/>
+              </svg>
+              <span style="color:var(--white)">WhatsApp</span>
+            </a>
+
+            <!-- Instagram (no username shown per your request) -->
+            <a class="contact-pill" href="https://www.instagram.com/solah.mentoria?igsh=MWp5N3ZtOHQ4azc5YQ==" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 7.2a4.8 4.8 0 100 9.6 4.8 4.8 0 000-9.6zm0 7.92a3.12 3.12 0 110-6.24 3.12 3.12 0 010 6.24zM18.24 6.2a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0zM22 12c0 2.43-.64 4.7-1.77 6.66a4.02 4.02 0 01-2.5 2.5C16.7 22 14.43 22.64 12 22.64S7.3 22 5.27 21.16a4.02 4.02 0 01-2.5-2.5C1.36 16.7.72 14.43.72 12S1.36 7.3 2.5 5.27A4.02 4.02 0 015 2.77C7.3 1.36 9.57.72 12 .72s4.7.64 6.66 1.77a4.02 4.02 0 012.5 2.5C22 7.3 22.64 9.57 22.64 12z" fill="currentColor"/>
+              </svg>
+              <span style="color:var(--white)">Instagram</span>
+            </a>
+
+            <!-- LinkedIn -->
+            <a class="contact-pill" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.45 20.45h-3.6v-5.47c0-1.3-.02-2.98-1.82-2.98-1.82 0-2.1 1.43-2.1 2.9v5.55h-3.6V8.99h3.46v1.54h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.39 4.3 5.49v6.28zM5.34 7.5a2.08 2.08 0 110-4.16 2.08 2.08 0 010 4.16zM6.93 20.45H3.74V8.99h3.19v11.46z" fill="currentColor"/>
+              </svg>
+              <span style="color:var(--white)">LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Solah Mentoria — Todos os direitos reservados.
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // ========== Small utilities ==========
+
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll for native anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+
+    // Header show/hide on scroll
+    (function(){
+      let last = 0;
+      const header = document.getElementById('site-header');
+      window.addEventListener('scroll', () => {
+        const st = window.scrollY || window.pageYOffset;
+        if (st > last && st > 80) {
+          header.classList.add('hidden');
+        } else {
+          header.classList.remove('hidden');
+        }
+        last = st <= 0 ? 0 : st;
+      }, {passive:true});
+    })();
+
+    // Reveal on scroll (intersection observer)
+    (function(){
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add('inview');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    })();
+
+    // Accessibility: remove focus outline only for mouse users
+    (function(){
+      function handleFirstTab(e){
+        if(e.key === 'Tab'){
+          document.documentElement.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+</body>
+</html>
