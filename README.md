@@ -1,2 +1,2 @@
-# portfolio-geny-couto
-Um portfólio pessoal da mentora, Geny Couto.
+# portfolio-geni-couto
+Um portfólio pessoal da mentora, Geni Couto.
